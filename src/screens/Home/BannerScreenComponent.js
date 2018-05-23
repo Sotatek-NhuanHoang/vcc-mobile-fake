@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
+import _ from 'lodash';
 
 import styles from '../../styles/screens/Home/BannerScreenComponent';
 
@@ -41,9 +42,9 @@ class BannerScreenComponent extends PureComponent {
         const { currentSlideIndex } = this.state;
         const { imageSources } = this.props;
 
-        const SlicesComponent = imageSources.map((imageSource, index) => (
-            <View>
-                <ImageSlideComponent key={index} imageSource={imageSource} />
+        const SlicesComponent = _.map(imageSources, (imageSource, index) => (
+            <View key={index}>
+                <ImageSlideComponent imageSource={imageSource} />
             </View>
         ));
 

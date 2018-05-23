@@ -1,6 +1,7 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-import globalReducer from './global';
+import { globalReducer, globalSaga } from './global';
 import homeScreenReducer from './homeScreen';
 
 
@@ -9,7 +10,14 @@ const reducers = combineReducers({
     homeScreen: homeScreenReducer,
 });
 
-const store = createStore(reducers);
+const sagaMiddleware = createSagaMiddleware();
 
+const store = createStore(
+    reducers,
+    applyMiddleware(sagaMiddleware)
+);
+
+
+sagaMiddleware.run(globalSaga);
 
 export default store;

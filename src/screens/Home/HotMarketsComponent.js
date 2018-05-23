@@ -1,12 +1,20 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { connect } from 'react-redux';
 
 import styles from '../../styles/screens/Home/HotMarketsComponent';
+import { GLOBAL_GET_MARKETS_REQUESTED } from '../../store/global';
 
 
-class HotMarketsComponent extends Component {
-    state = {  }
+class HotMarketsComponent extends PureComponent {
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(GLOBAL_GET_MARKETS_REQUESTED());
+    }
+
+
     render() {
         return (
             <View style={ styles.container }>
@@ -59,4 +67,7 @@ class HotMarketsComponent extends Component {
     }
 }
 
-export default HotMarketsComponent;
+
+const mapDispathToProps = (dispatch) => ({ dispatch });
+
+export default connect(null, mapDispathToProps)(HotMarketsComponent);
