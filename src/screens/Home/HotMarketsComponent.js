@@ -18,15 +18,39 @@ class HotMarketsComponent extends Component {
                         <View style={ styles.slideItem }>
                             <Text style={ styles.slideItem_Market }>Nhuan</Text>
                             <Text style={ styles.slideItem_Price }>Nhuan</Text>
-                            <Text style={ styles.slideItem_Change }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
                         </View>
 
                         <View style={ styles.slideItem }>
-                            <Text>Nhuan</Text>
+                            <Text style={ styles.slideItem_Market }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Price }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
                         </View>
 
                         <View style={ styles.slideItem }>
-                            <Text>Nhuan</Text>
+                            <Text style={ styles.slideItem_Market }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Price }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
+                        </View>
+                    </View>
+
+                    <View style={ styles.slideContainer }>
+                        <View style={ styles.slideItem }>
+                            <Text style={ styles.slideItem_Market }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Price }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
+                        </View>
+
+                        <View style={ styles.slideItem }>
+                            <Text style={ styles.slideItem_Market }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Price }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
+                        </View>
+
+                        <View style={ styles.slideItem }>
+                            <Text style={ styles.slideItem_Market }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Price }>Nhuan</Text>
+                            <Text style={ styles.slideItem_Change }>HiHi</Text>
                         </View>
                     </View>
                 </Swiper>

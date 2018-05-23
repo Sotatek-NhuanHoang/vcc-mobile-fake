@@ -4,7 +4,7 @@ import { Colors, FontSize } from '../../variables';
 
 export default ScaledSheet.create({
     container: {
-        height: 300,
+        height: 100,
         backgroundColor: Colors.gray,
         marginTop: 20,
     },

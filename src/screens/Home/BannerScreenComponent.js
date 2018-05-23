@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Image, Text } from 'react-native';
+import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 
 import styles from '../../styles/screens/Home/BannerScreenComponent';
@@ -24,16 +25,10 @@ export const ImageSlideComponent = (props) => {
 };
 
 
-export default class BannerScreenComponent extends Component {
+class BannerScreenComponent extends PureComponent {
 
     state = {
         currentSlideIndex: 1,
-        imageSources: [
-            { uri: 'https://cmcsoft.com/image/data/up-anh/chain.jpg' },
-            { uri: 'https://cmcsoft.com/image/data/up-anh/chain.jpg' },
-            { uri: 'https://cmcsoft.com/image/data/up-anh/chain.jpg' },
-            { uri: 'https://cmcsoft.com/image/data/up-anh/chain.jpg' }
-        ],
     };
 
 
@@ -43,7 +38,9 @@ export default class BannerScreenComponent extends Component {
 
 
     render(){
-        const { imageSources, currentSlideIndex } = this.state;
+        const { currentSlideIndex } = this.state;
+        const { imageSources } = this.props;
+
         const SlicesComponent = imageSources.map((imageSource, index) => (
             <View>
                 <ImageSlideComponent key={index} imageSource={imageSource} />
@@ -71,4 +68,12 @@ export default class BannerScreenComponent extends Component {
         );
     };
 }
+
+
+
+const mapStateToProps = ({ homeScreen }) => ({
+    imageSources: homeScreen.banner.imageSources,
+});
+
+export default connect(mapStateToProps)(BannerScreenComponent);
 

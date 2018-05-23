@@ -11,6 +11,6 @@ export default {
         fontWeight: 'bold',
         textAlign: 'center',
         flex: 1,
-        fontSize: FontSize.h2,
+        fontSize: FontSize.h3,
     },
 };
