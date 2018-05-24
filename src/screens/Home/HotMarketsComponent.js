@@ -20,6 +20,7 @@ class HotMarketsComponent extends PureComponent {
                  <Swiper
                     showsButtons={ false }
                     loop={ true }
+                    paginationStyle={ styles.paginationStyle }
                 >
                     <View style={ styles.slideContainer }>
                         <View style={ styles.slideItem }>
@@ -67,10 +68,14 @@ class HotMarketsComponent extends PureComponent {
 }
 
 
+const mapStateToProps = ({ global }) => ({
+    markets: global.markets,
+});
+
 const mapDispathToProps = (dispatch) => ({
     getMarkets: () => {
         dispatch(GLOBAL_GET_MARKETS_REQUESTED());
     },
 });
 
-export default connect(null, mapDispathToProps)(HotMarketsComponent);
+export default connect(mapStateToProps, mapDispathToProps)(HotMarketsComponent);

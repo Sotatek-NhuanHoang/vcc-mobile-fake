@@ -7,4 +7,9 @@ export default ScaledSheet.create({
         flex: 1,
         backgroundColor: Colors.darkGray,
     },
+
+    childComponent: {
+        width: '100%',
+        marginBottom: '6@ms',
+    }
 });

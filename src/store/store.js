@@ -15,4 +15,10 @@ const store = createStore(
     applyMiddleware(thunk)
 );
 
+let counter = 1;
+store.subscribe(() => {
+    console.log(`Store ${counter}: `, store.getState());
+    counter++;
+});
+
 export default store;

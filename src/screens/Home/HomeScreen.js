@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
 import BannerScreenComponent from './BannerScreenComponent';
 import HotMarketsComponent from './HotMarketsComponent';
+import NavigationMenusComponent from './NavigationMenusComponent';
 
 import styles from '../../styles/screens/Home/HomeScreen';
 
@@ -17,8 +18,17 @@ export class HomeScreen extends PureComponent {
     render() {
         return (
             <ScrollView style={ styles.container }>
-                <BannerScreenComponent />
-                <HotMarketsComponent/>
+                <View style={ styles.childComponent }>
+                    <BannerScreenComponent />
+                </View>
+
+                <View style={ styles.childComponent }>
+                    <HotMarketsComponent />
+                </View>
+
+                <View style={ styles.childComponent }>
+                    <NavigationMenusComponent />
+                </View>
             </ScrollView>
         );
     }

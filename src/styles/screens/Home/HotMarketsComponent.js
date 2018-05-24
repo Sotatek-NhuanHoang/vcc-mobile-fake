@@ -2,11 +2,16 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { Colors, FontSize } from '../../variables';
 
 
+const ComponentHeight = 80;
+
 export default ScaledSheet.create({
     container: {
-        height: 100,
+        height: `${ComponentHeight}@ms`,
         backgroundColor: Colors.gray,
-        marginTop: 20,
+    },
+
+    paginationStyle: {
+        bottom: '2@ms',
     },
 
     slideContainer: {
@@ -15,9 +20,11 @@ export default ScaledSheet.create({
 
     slideItem: {
         flex: 1,
+        height: `${ComponentHeight}@ms`,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: '15@ms',
     },
 
     slideItem_Market: {

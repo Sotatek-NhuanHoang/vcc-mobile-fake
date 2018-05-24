@@ -1,5 +1,7 @@
 import { handleActions, createAction } from 'redux-actions';
+
 import MasterApi from '../api/master';
+import MarketPricesApi from '../api/marketPrices';
 
 
 /**
@@ -32,10 +34,21 @@ export const GLOBAL_GET_MARKETS_REQUESTED = (payload = {}) => async (dispatch, g
     }
 
     try {
-        const response = await MasterApi.get();
-        const markets = response.data.data.coin_settings;
+        const responses = await Promise.all([
+            MasterApi.get(),
+            MarketPricesApi.get()
+        ]);
 
-        dispatch(GLOBAL_GET_MARKETS_SUCCEEDED(markets));
+        const rawMarkets = responses[0].data.data.coin_settings;
+        const prices = responses[1].data.data;
+
+        // update markets' price
+        const updatedMarkets = rawMarkets.map((market) => {
+            const coinPair = market.currency + '_' + market.coin;
+            return { ...market, ...prices[coinPair] };
+        });
+
+        dispatch(GLOBAL_GET_MARKETS_SUCCEEDED(updatedMarkets));
     } catch (error) {
         dispatch(GLOBAL_GET_MARKETS_FAILED(error));
     }
