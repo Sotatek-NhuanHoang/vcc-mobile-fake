@@ -20,26 +20,43 @@ export default ScaledSheet.create({
 
     slideItem: {
         flex: 1,
-        height: `${ComponentHeight}@ms`,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: '15@ms',
+        marginTop: '8@ms',
+        paddingTop: '1@ms',
+        paddingBottom: '1@ms',
+    },
+
+    slideItem_BorderRight: {
+        borderRightWidth: 0.5,
+        borderRightColor: Colors.lightGray,
     },
 
     slideItem_Market: {
         fontSize: FontSize.small,
         color: Colors.lightGray,
-        fontWeight: '400',
     },
 
     slideItem_Price: {
-        fontSize: FontSize.h2,
+        fontSize: FontSize.h3,
         color: Colors.white,
     },
 
     slideItem_Change: {
-        fontSize: FontSize.small,
+        fontSize: FontSize.p,
         color: Colors.red,
+    },
+
+    slideItem_moreBtnText: {
+        color: Colors.lightGray,
+        fontSize: FontSize.h3,
+        marginRight: '6@ms',
+    },
+
+    slideItem_moreBtnIcon: {
+        color: Colors.lightGray,
+        fontSize: FontSize.h2,
+        paddingTop: '2@ms',
     },
 });

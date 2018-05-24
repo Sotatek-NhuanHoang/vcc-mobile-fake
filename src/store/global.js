@@ -99,4 +99,18 @@ export const globalReducer = handleActions({
     },
 }, defaultState);
 
+
+
+/**
+ * =====================================================
+ * Global selectors
+ * =====================================================
+ */
+
+export const globalHotMarketsSelector = (globalState) => {
+    return globalState.markets.data.slice(0, 5);
+};
+
+
+
 export default globalReducer;
