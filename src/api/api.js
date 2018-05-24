@@ -12,8 +12,18 @@ const baseApi = create({
 });
 
 const Api = {
-    get(endpoint, params) {
-        return baseApi.get(endpoint, params);
+    async get(endpoint, params) {
+        try {
+            const response = await baseApi.get(endpoint, params);
+
+            if (response.ok) {
+                return response;
+            } else {
+                throw new Error(response.problem);
+            }
+        } catch (error) {
+            throw error;
+        }
     },
 };
 

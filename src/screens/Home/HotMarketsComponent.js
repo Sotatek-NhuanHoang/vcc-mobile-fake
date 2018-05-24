@@ -10,8 +10,7 @@ import { GLOBAL_GET_MARKETS_REQUESTED } from '../../store/global';
 class HotMarketsComponent extends PureComponent {
 
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(GLOBAL_GET_MARKETS_REQUESTED());
+        this.props.getMarkets();
     }
 
 
@@ -68,6 +67,10 @@ class HotMarketsComponent extends PureComponent {
 }
 
 
-const mapDispathToProps = (dispatch) => ({ dispatch });
+const mapDispathToProps = (dispatch) => ({
+    getMarkets: () => {
+        dispatch(GLOBAL_GET_MARKETS_REQUESTED());
+    },
+});
 
 export default connect(null, mapDispathToProps)(HotMarketsComponent);

@@ -1,6 +1,4 @@
 import { handleActions, createAction } from 'redux-actions';
-import { call, put, takeEvery } from 'redux-saga/effects';
-
 import MasterApi from '../api/master';
 
 
@@ -10,7 +8,7 @@ import MasterApi from '../api/master';
  * =====================================================
  */
 
-export const GLOBAL_GET_MARKETS_REQUESTED = createAction('GLOBAL_GET_MARKETS_REQUESTED');
+export const GLOBAL_GET_MARKETS_REQUESTING = createAction('GLOBAL_GET_MARKETS_REQUESTING');
 export const GLOBAL_GET_MARKETS_SUCCEEDED = createAction('GLOBAL_GET_MARKETS_SUCCEEDED');
 export const GLOBAL_GET_MARKETS_FAILED = createAction('GLOBAL_GET_MARKETS_FAILED');
 
@@ -18,22 +16,29 @@ export const GLOBAL_GET_MARKETS_FAILED = createAction('GLOBAL_GET_MARKETS_FAILED
 
 /**
  * =====================================================
- * Redux saga
+ * Global thunk actions
  * =====================================================
  */
 
-const getMarkets = function* () {
-    try {
-        console.log(MasterApi);
-        const response = yield call(MasterApi.get);
-        console.log('response', response);
-    } catch (e) {
-        console.log('error', e);
-    }
-};
+export const GLOBAL_GET_MARKETS_REQUESTED = (payload = {}) => async (dispatch, getState) => {
+    const { force } = payload;
+    const currentState = getState().global;
 
-export const globalSaga = function* () {
-    yield takeEvery(GLOBAL_GET_MARKETS_REQUESTED().type, getMarkets);
+    dispatch(GLOBAL_GET_MARKETS_REQUESTING());
+
+    if (!(force || currentState.markets.data.length === 0)) {
+        dispatch(GLOBAL_GET_MARKETS_SUCCEEDED());
+        return;
+    }
+
+    try {
+        const response = await MasterApi.get();
+        const markets = response.data.data.coin_settings;
+
+        dispatch(GLOBAL_GET_MARKETS_SUCCEEDED(markets));
+    } catch (error) {
+        dispatch(GLOBAL_GET_MARKETS_FAILED(error));
+    }
 };
 
 
@@ -45,9 +50,40 @@ export const globalSaga = function* () {
  */
 
 const defaultState = {
-    markets: [],
+    markets: {
+        data: [],
+        loading: false,
+        error: null,
+    },
 };
 
-export const globalReducer = handleActions({}, defaultState);
+export const globalReducer = handleActions({
+    GLOBAL_GET_MARKETS_REQUESTING: (state) => {
+        return {
+            ...state,
+            markets: { ...state.markets, loading: true, error: null },
+        };
+    },
+
+    GLOBAL_GET_MARKETS_SUCCEEDED: (state, action) => {
+        if (!action.payload) {
+            return { ...state };
+        }
+
+        const markets = action.payload;
+        return {
+            ...state,
+            markets: { ...state.markets, data: markets, loading: false, error: null },
+        };
+    },
+
+    GLOBAL_GET_MARKETS_FAILED: (state, action) => {
+        const error = action.payload;
+        return {
+            ...state,
+            markets: { ...state.markets, loading: false, error: error },
+        };
+    },
+}, defaultState);
 
 export default globalReducer;

@@ -6,6 +6,8 @@ import _ from 'lodash';
 
 import styles from '../../styles/screens/Home/BannerScreenComponent';
 
+import { HOME_BANNER_CHANGE_CURRENT_SLIDE_INDEX } from '../../store/homeScreen';
+
 
 export const SlideIndexComponent = (props) => {
     const { slideIndex } = props;
@@ -28,19 +30,13 @@ export const ImageSlideComponent = (props) => {
 
 class BannerScreenComponent extends PureComponent {
 
-    state = {
-        currentSlideIndex: 1,
-    };
-
-
     onSlideIndexChanged(currentSlideIndex) {
-        this.setState({ currentSlideIndex });
+        this.props.changeSlideIndex(currentSlideIndex);
     };
 
 
     render(){
-        const { currentSlideIndex } = this.state;
-        const { imageSources } = this.props;
+        const { imageSources, currentSlideIndex } = this.props;
 
         const SlicesComponent = _.map(imageSources, (imageSource, index) => (
             <View key={index}>
@@ -74,7 +70,14 @@ class BannerScreenComponent extends PureComponent {
 
 const mapStateToProps = ({ homeScreen }) => ({
     imageSources: homeScreen.banner.imageSources,
+    currentSlideIndex: homeScreen.banner.currentSlideIndex,
 });
 
-export default connect(mapStateToProps)(BannerScreenComponent);
+const mapDispatchToProps = (dispatch) => ({
+    changeSlideIndex: (slideIndex) => {
+        dispatch(HOME_BANNER_CHANGE_CURRENT_SLIDE_INDEX(slideIndex));
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BannerScreenComponent);
 
