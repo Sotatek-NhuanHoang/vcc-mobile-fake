@@ -21,3 +21,16 @@ export const FontSize = {
     small: moderateScale(10),
     extraSmall: moderateScale(8),
 };
+
+
+export const Size = {
+    s1: moderateScale(4),
+    s2: moderateScale(6),
+    s3: moderateScale(10),
+    s4: moderateScale(12),
+    s5: moderateScale(14),
+    s6: moderateScale(16),
+    s7: moderateScale(18),
+    s8: moderateScale(20),
+};
+

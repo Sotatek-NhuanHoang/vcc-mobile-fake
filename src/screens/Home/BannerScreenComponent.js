@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 import _ from 'lodash';
 
+import { HOME_BANNER_CHANGE_CURRENT_SLIDE_INDEX } from '../../store/homeScreen';
+
 import styles from '../../styles/screens/Home/BannerScreenComponent';
 
-import { HOME_BANNER_CHANGE_CURRENT_SLIDE_INDEX } from '../../store/homeScreen';
 
 
 export const SlideIndexComponent = (props) => {

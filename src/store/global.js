@@ -1,4 +1,5 @@
 import { handleActions, createAction } from 'redux-actions';
+import _ from 'lodash';
 
 import MasterApi from '../api/master';
 import MarketPricesApi from '../api/marketPrices';
@@ -10,7 +11,7 @@ import MarketPricesApi from '../api/marketPrices';
  * =====================================================
  */
 
-export const GLOBAL_GET_MARKETS_REQUESTING = createAction('GLOBAL_GET_MARKETS_REQUESTING');
+export const GLOBAL_GET_MARKETS_LOADING = createAction('GLOBAL_GET_MARKETS_LOADING');
 export const GLOBAL_GET_MARKETS_SUCCEEDED = createAction('GLOBAL_GET_MARKETS_SUCCEEDED');
 export const GLOBAL_GET_MARKETS_FAILED = createAction('GLOBAL_GET_MARKETS_FAILED');
 
@@ -26,14 +27,13 @@ export const GLOBAL_GET_MARKETS_REQUESTED = (payload = {}) => async (dispatch, g
     const { force } = payload;
     const currentState = getState().global;
 
-    dispatch(GLOBAL_GET_MARKETS_REQUESTING());
-
-    if (!(force || currentState.markets.data.length === 0)) {
-        dispatch(GLOBAL_GET_MARKETS_SUCCEEDED());
+    if (!(force || currentState.markets.data.length === 0 || currentState.markets.loading)) {
         return;
     }
 
     try {
+        dispatch(GLOBAL_GET_MARKETS_LOADING());
+
         const responses = await Promise.all([
             MasterApi.get(),
             MarketPricesApi.get()
@@ -71,7 +71,7 @@ const defaultState = {
 };
 
 export const globalReducer = handleActions({
-    GLOBAL_GET_MARKETS_REQUESTING: (state) => {
+    GLOBAL_GET_MARKETS_LOADING: (state) => {
         return {
             ...state,
             markets: { ...state.markets, loading: true, error: null },
@@ -111,6 +111,14 @@ export const globalHotMarketsSelector = (globalState) => {
     return globalState.markets.data.slice(0, 5);
 };
 
+export const globalBTC24TopMarketsSelector = (globalState) => {
+    const btcMarkets = _.filter(globalState.markets.data, (market) => {
+        return market.currency.toUpperCase() === 'BTC';
+    });
+    const btcTopMarkets = _.orderBy(btcMarkets, ['volume', 'coin'], ['desc', 'desc']);
+    
+    return btcTopMarkets;
+};
 
 
 export default globalReducer;

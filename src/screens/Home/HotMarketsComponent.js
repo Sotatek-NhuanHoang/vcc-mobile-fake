@@ -4,12 +4,11 @@ import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import styles from '../../styles/screens/Home/HotMarketsComponent';
 import { GLOBAL_GET_MARKETS_REQUESTED } from '../../store/global';
 import { globalHotMarketsSelector } from '../../store/global';
-
 import { currenyFormatFilter } from '../../utils/filters';
 
+import styles from '../../styles/screens/Home/HotMarketsComponent';
 
 
 export const MarketInfoComponent = (props) => {
