@@ -1,33 +1,61 @@
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, moderateScale } from 'react-native-size-matters';
 import { Colors, FontSize, Size } from '../../variables';
 
+
+
+const MenuCursorPosition = -moderateScale(4);
 
 export default ScaledSheet.create({
     container: {
         width: '100%',
         flexDirection: 'column',
-        paddingBottom: Size.s2,
+        paddingBottom: Size.s5,
     },
 
-    btcMenuBar: {
+    menuBar: {
         width: '100%',
+        height: '30@ms',
         flexDirection: 'row',
         backgroundColor: Colors.gray,
-        paddingTop: Size.s2,
-        paddingBottom: Size.s2,
         paddingLeft: Size.s5,
         paddingRight: Size.s5,
     },
 
-    btcMenuBar_Text: {
+    menu: {
         flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+    },
+
+    menu__border: {
+        borderRightWidth: 1,
+        borderRightColor: Colors.lightGray,
+    },
+
+    menu_Cursor: {
+        position: 'absolute',
+        bottom: MenuCursorPosition,
+        fontSize: FontSize.p,
+        color: Colors.yellow,
+    },
+
+    menu_Text: {
         color: Colors.white,
         fontSize: FontSize.p,
     },
+    menu_Text__active: {
+        color: Colors.yellow,
+    },
 
-    btcMenuBar_Icon: {
+    menu_Icon: {
         color: Colors.white,
         fontSize: FontSize.h3,
+        marginRight: Size.s2,
+    },
+    menu_Icon__active: {
+        color: Colors.yellow,
     },
 
     marketListContainer: {
