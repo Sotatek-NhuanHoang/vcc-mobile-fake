@@ -4,6 +4,8 @@ import { ScrollView, Text, View } from 'react-native';
 import BannerScreenComponent from './BannerScreenComponent';
 import HotMarketsComponent from './HotMarketsComponent';
 import NavigationMenusComponent from './NavigationMenusComponent';
+import BTC24hTopComponent from './BTC24hTopComponent';
+import GainersLosersComponent from './GainersLosersComponent';
 
 import styles from '../../styles/screens/Home/HomeScreen';
 
@@ -28,6 +30,11 @@ export class HomeScreen extends PureComponent {
 
                 <View style={ styles.childComponent }>
                     <NavigationMenusComponent />
+                </View>
+
+                <View style={ styles.childComponent }>
+                    <BTC24hTopComponent />
+                    <GainersLosersComponent />
                 </View>
             </ScrollView>
         );
