@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -5,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { MarketDetailComponent } from './MarketDetailComponent';
 import { GLOBAL_GET_MARKETS_REQUESTED } from '../../store/global';
+import { HOME_SHOW_GAINERS_LIST, HOME_SHOW_LOSERS_LIST } from '../../store/homeScreen';
 import { globalBTC24TopMarketsSelector } from '../../store/global';
 
 import styles from '../../styles/screens/Home/GainersLosersComponent';
@@ -20,8 +23,12 @@ class GainersLosersComponent extends Component {
 
     shouldComponentUpdate(nextProps) {
         const currentProps = this.props;
+        console.log(currentProps.showGainersList, nextProps.showGainersList)
 
-        if (JSON.stringify(currentProps.markets) != JSON.stringify(nextProps.markets)) {
+        if (
+            JSON.stringify(currentProps.markets) != JSON.stringify(nextProps.markets) ||
+            currentProps.showGainersList != nextProps.showGainersList
+        ) {
             return true;
         } else {
             return false;
@@ -29,16 +36,47 @@ class GainersLosersComponent extends Component {
     }
 
 
+    onShowGainersList() {
+        this.props.setShowGainersList();
+    }
+
+
+    onShowLosersList() {
+        this.props.setShowLosersList();
+    }
+
+
     render() {
-        const { markets } = this.props;
+        const { markets, showGainersList } = this.props;
 
         return (
             <View style={ styles.container  }>
                 {/* BTC market menu bar */}
-                <TouchableOpacity style={ styles.btcMenuBar } >
-                    <Text style={ styles.btcMenuBar_Text }>BTC 24h top</Text>
-                    <Icon name="angle-right" style={ styles.btcMenuBar_Icon } />
-                </TouchableOpacity>
+                <View style={ styles.menuBar }>
+                    <TouchableOpacity style={ [styles.menu, styles.menu__border] } onPress={() => this.onShowGainersList()}>
+                        <Icon
+                            name="angle-double-up"
+                            style={ showGainersList ? [styles.menu_Icon, styles.menu_Icon__active]: styles.menu_Icon }
+                        />
+                        <Text style={ showGainersList ? [styles.menu_Text, styles.menu_Text__active]: styles.menu_Text }>
+                            BTC 24h top
+                        </Text>
+
+                        { showGainersList ? <Icon name="caret-up" style={ styles.menu_Cursor }/> : null }
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={ styles.menu } onPress={() => this.onShowLosersList()}>
+                        <Icon
+                            name="angle-double-down"
+                            style={ !showGainersList ? [styles.menu_Icon, styles.menu_Icon__active]: styles.menu_Icon }
+                        />
+                        <Text style={ !showGainersList ? [styles.menu_Text, styles.menu_Text__active]: styles.menu_Text }>
+                            BTC 24h top
+                        </Text>
+
+                        { !showGainersList ? <Icon name="caret-up" style={ styles.menu_Cursor }/> : null }
+                    </TouchableOpacity>
+                </View>
 
 
                 {/* Market list */}
@@ -53,15 +91,15 @@ class GainersLosersComponent extends Component {
                             Last Price
                         </Text>
 
-                         <Text style={ [styles.marketListHeader_Text, styles.marketListHeader_TextRight] }>
-                            Volume(BTC)
+                        <Text style={ [styles.marketListHeader_Text, styles.marketListHeader_TextRight] }>
+                            24h Chg%
                         </Text>
                     </View>
 
                     {/* List */}
                     {
                         markets.map((market, index) => {
-                            const { currency, coin, last_24h_price, volume } = market;
+                            const { currency, coin, last_24h_price, change } = market;
 
                             return (
                                 <MarketDetailComponent
@@ -69,7 +107,7 @@ class GainersLosersComponent extends Component {
                                     currency={ currency }
                                     coin={ coin }
                                     last_24h_price={ last_24h_price }
-                                    volume={ volume }
+                                    volume={ change }
                                 />
                             );
                         })
@@ -82,14 +120,24 @@ class GainersLosersComponent extends Component {
 
 
 
-const mapStateToProps = ({ global }) => ({
+const mapStateToProps = ({ global, homeScreen }) => ({
     markets: globalBTC24TopMarketsSelector(global),
+    showGainersList: homeScreen.showGainersList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     getMarkets: () => {
         dispatch(GLOBAL_GET_MARKETS_REQUESTED());
     },
+
+    setShowGainersList: () => {
+        dispatch(HOME_SHOW_GAINERS_LIST());
+    },
+
+    setShowLosersList: () => {
+        dispatch(HOME_SHOW_LOSERS_LIST());
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GainersLosersComponent);
+

@@ -34,6 +34,9 @@ export class HomeScreen extends PureComponent {
 
                 <View style={ styles.childComponent }>
                     <BTC24hTopComponent />
+                </View>
+
+                <View style={ styles.childComponent }>
                     <GainersLosersComponent />
                 </View>
             </ScrollView>

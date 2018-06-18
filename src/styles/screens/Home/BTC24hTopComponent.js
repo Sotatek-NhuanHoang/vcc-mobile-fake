@@ -11,10 +11,10 @@ export default ScaledSheet.create({
 
     btcMenuBar: {
         width: '100%',
+        height: '30@ms',
         flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: Colors.gray,
-        paddingTop: Size.s2,
-        paddingBottom: Size.s2,
         paddingLeft: Size.s5,
         paddingRight: Size.s5,
     },
